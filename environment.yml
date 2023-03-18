@@ -1,0 +1,8 @@
+name: finetune-on-re
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8.5
+  - torch=1.13.0
+  - transformers=4.6.0
