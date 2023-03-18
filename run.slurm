@@ -9,10 +9,9 @@
 
 #set -x
 
-# 1-corpus_name; 2-seed; 3-learning_rate
 corpus=chemprot_blurb
 num_epochs=60
-model_name=scibert
+model_name=pubmedbert
 seed=41
 lr=1e-05
 es=5
