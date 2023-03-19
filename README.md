@@ -4,7 +4,7 @@ codes for fine-tuning domain-specific BERT variants on relation extraction (RE) 
 # About Fine-tuning
 - we take sequtial seeds for multiple runs, e.g. if seeded by 41 for 5 runs, the 5 runs will be respectively seeded by 41 ,42, 43, 44, 45.
 - we calculate the weighted binary cross entropy as the loss with the weight of the $i$-th class: $c_i=\frac{\sum\limits_{j=0}^{M-1} N_j}{N_i}$ , where $N_i$ is the number of examples labelled by the $i$-th class; $M$ is the number of classes.
-- we use a slanted triangular scheduler on learning rate (remove --warmup to change to constant learning rate).
+- we use a slanted triangular scheduler on the learning rate (remove --warmup to change to constant learning rate).
 
 # How to use
 - create a directory /data/ under the current directory, prepare train.tsv, dev.tsv, test.tsv under /data/corpus_name/, e.g. /data/chemprot_blue/. 
