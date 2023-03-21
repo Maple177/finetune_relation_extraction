@@ -103,4 +103,5 @@ if you do not need saved model weights and prediction files, to release disk spa
 | macro+ | macro F1-score |
 | macro- | macro F1-score with the false relation EXCLUDED |
 
-:raised_hand: if labels of the test set are not available, set --do_not_generate_test_score to skip evaluation on the test set.
+- if you need other types of scores, you can calculate whatever scores you want using prediction files.
+- :raised_hand: if labels of the test set are not available, set --do_not_generate_test_score to skip evaluation on the test set.
