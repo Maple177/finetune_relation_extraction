@@ -18,7 +18,7 @@ def get_args():
      group.add_argument("--number_of_examples_for_dry_run",type=int,default=50,
                          help="Choose how many examples for dry run.")
      group.add_argument("--monitor",type=str,default="score",
-                         help="Criteria to use on the validation set to monitor early stopping.")
+                         help="Criteria to use on the validation set to monitor early stopping: loss or score.")
      group.add_argument("--early_stopping",action="store_true",
                          help="If to use early stopping during training.")
      group.add_argument("--patience",type=int,default=5,
