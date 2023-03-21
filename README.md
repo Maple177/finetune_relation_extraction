@@ -84,6 +84,13 @@ python3 main.py --help
 
 # Evaluation
 
-:exclamation: by default we calculate the micro F1-score with the false relation EXCLUDED.
+:paperclip: we calculate four types of F1-scores and save them automatically in .csv files after fine-tuning.
+
+| name | definition |
+| --- | --- |
+| micro+ | micro F1-score |
+| micro- | micro F1-score with the false relation EXCLUDED |
+| macro+ | macro F1-score |
+| macro- | macro F1-score with the false relation EXCLUDED |
 
 if you do not need saved model weights and prediction files, to release disk space, you can then delete everything under /models/.
