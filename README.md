@@ -22,7 +22,7 @@ codes for fine-tuning domain-specific BERT variants on relation extraction (RE) 
 
 - :raised_hand: if you want to load pre-trained models from local files, create a directory /pretrained_models/ and put vocal.txt, pytorch_model.bin and config.json under /pretrained_models/model_name/ e.g. /pretrained_models/biobert/.
 
-- :raised_hand: if you use datasets or BERT variants that are not in the pre-list, simple modifications need to be made to codes:
+- :raised_hand: if you use datasets or BERT variants that are not in the pre-list, simple modifications need to be made:
   - add a map from labels to integers in the dictionary "label2id" in utils_data.py. Notice that you should ALWAYS map the false relation to 0 (in our evaluation we assume that 0 refers to the false relation and is thus excluded). An example label-to-id map for chemprot (blurb / blue) is:
    ```
    {"false": 0, 
@@ -47,7 +47,7 @@ python3 main.py --model_name pubmedbert \
                 --ensemble_size 5  --warmup \
                 --do_not_save_all_models
 ```
-- use the example command line should be able to reproduce the follwing results (test_scores.csv) on ChemProt (blurb):
+- use the example command line should be able to reproduce the follwing result (/test/micro_minus.csv) on ChemProt (blurb):
 
 
 | | precision | recall | F1-score |
