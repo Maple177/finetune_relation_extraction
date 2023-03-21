@@ -60,7 +60,7 @@ python3 main.py --model_name pubmedbert \
 
 - set --dry_run to make a quick pass (this will take a small subset of data), check:
   - if dev_preds.npy & test_preds.npy are correctly generated under /models/your_hyperparamater_setting/; 
-  - if macro_minus.csv, macro_plus.csv, micro_minus.csv, micro_plus.csv are correctly generated under /scores/your_hyperparameter_setting/dev/ and /scores/your_hyperparameter_setting/test/.
+  - if macro_minus.csv, macro_plus.csv, micro_minus.csv, micro_plus.csv are correctly generated under /scores/your_hyperparameter_setting/dev/ & /scores/your_hyperparameter_setting/test/.
   
 - set --early_stopping to enable early stopping, by default fine-tuning will stop if micro F1-score on the validation set does not increase within 3 epochs.
 
