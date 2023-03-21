@@ -37,7 +37,7 @@ codes for fine-tuning domain-specific BERT variants on relation extraction (RE) 
   - number of classes (including false relation) in "number_of_labels".
   
 # Command
-- use example slurm file to train an ensemble of 5 PubMedBERT models on chemprot (blurb). Set your hyperparameters in the slurm file or directory pass them using the following line.
+- use the example slurm file will train an ensemble of 5 PubMedBERT models on chemprot (blurb). Set your hyperparameters in the slurm file or directory pass them using the following line.
 ```
 python3 main.py --model_name pubmedbert \
                 --task_name chemprot_blurb \
@@ -65,7 +65,7 @@ python3 main.py --model_name pubmedbert \
   
 - set --early_stopping to enable early stopping, by default fine-tuning will stop if micro F1-score on the validation set does not increase within 5 epochs.
 
-- :bulb: by default best checkpoints of each run will be saved under /models/.../run_i ($i$=1,...,ensemble_size), but this may take too much disk space. Set --do_not_save_all_models to save only the best checkpoint of the current run (if you do not need fine-tuned model weights for each run).
+- :bulb: by default best checkpoints of all runs will be saved under /models/.../run_i ($i$=1,...,ensemble_size), but this may take too much disk space. Set --do_not_save_all_models to save only the best checkpoint of the current run (if you do not need fine-tuned model weights for each run).
 
 - more details about fine-tuning options:
 ```
