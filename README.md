@@ -18,9 +18,9 @@ codes for fine-tuning domain-specific BERT variants on relation extraction (RE) 
 | corpus| chemprot_blurb \| chemprot_blue \| ddi_blurb \| ddi_blue \| i2b2 \| i2b2_modified  |
 |  BERT variants | biobert \| scibert \| pubmedbert \| bluebert \| clinicalbert \| biolinkbert |
 
-- if you want to load pre-trained models from local files, create a directory /pretrained_models/ and put vocal.txt, pytorch_model.bin and config.json under /pretrained_models/model_name/ i.e. /pretrained_models/biobert/.
+- :raised_hand: if you want to load pre-trained models from local files, create a directory /pretrained_models/ and put vocal.txt, pytorch_model.bin and config.json under /pretrained_models/model_name/ i.e. /pretrained_models/biobert/.
 
-- if you use datasets or BERT variants that are not in the pre-list, simple modifications need to be made to codes:
+- :raised_hand: if you use datasets or BERT variants that are not in the pre-list, simple modifications need to be made to codes:
   - add a map from labels to integers in the dictionary "label2id" in utils_data.py. Notice that you should ALWAYS map the false relation to 0 (in our evaluation we assume that 0 refers to the false relation and is thus excluded). An example label-to-id map for chemprot (blurb / blue) is:
    ```
    {"false": 0, 
