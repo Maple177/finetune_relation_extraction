@@ -42,7 +42,6 @@ codes for fine-tuning domain-specific BERT variants on relation extraction (RE) 
 python3 main.py --model_name pubmedbert \
                 --task_name chemprot_blurb \
                 --num_train_epochs 60 \
-                --seed 41  \
                 --learning_rate 1e-05 \
                 --ensemble_size 5  --warmup \
                 --do_not_save_all_models
