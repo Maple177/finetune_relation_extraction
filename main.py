@@ -43,8 +43,6 @@ def main():
     logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',datefmt='%m/%d/%Y %H:%S',level=logging.INFO,filename=f"logging/log_{args.task_name}_{args.model_name}",filemode='w')
     logger.warning("device: %s, n_gpu: %s",device, args.n_gpu)
 
-    """config_path = os.path.join(args.config_dir,args.model_name)
-    assert os.path.exists(config_path), "config file (config.json) NOT found. Put the corresponding config file to the chosen BERT variant under the folder'config'."""
     # load pre-trained model weights if saved locally
     pretrained_model_path = os.path.join(args.pretrained_model_path,args.model_name)
     if os.path.exists(pretrained_model_path):
