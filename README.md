@@ -76,6 +76,9 @@ python3 main.py --help
 
 # Environment
 - Python 3.8.5
+- Numpy 1.19.2
+- Pandas 1.1.3
+- Scikit-learn 0.23.2
 - Pytorch 1.13.0
 - Transformers 4.6.0
 
