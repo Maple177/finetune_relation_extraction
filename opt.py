@@ -33,7 +33,7 @@ def get_args():
      group.add_argument("--max_grad_norm", default=1.0, type=float,
                          help="Max gradient norm.")
      group.add_argument("--num_train_epochs", default=20, type=int,
-                         help="Total number of training epochs to perform.")
+                         help="Total number of training epochs; Maximum training epochs in case of using early stopping.")
      group.add_argument("--seed",type=int,default=41,
 		         help="The random seed to initialize model weights.")
      group.add_argument("--shuffle_train",action="store_true",help="If set, shuffle the train set before training.")
@@ -44,7 +44,7 @@ def get_args():
      group.add_argument("--logging_steps", type=int, default=50,
                          help="Denote this value by X; Log the training loss every X updates steps.")
      group.add_argument("--do_not_save_all_models",action="store_true",
-                         help="Set this to save disk space: if not set, we save ensemble_size checkpoints for each run "
+                         help="Set this to save disk space: if not set, we save ensemble_size checkpoints for all runs "
                               "(which may require too much disk space).")
      args = parser.parse_args()
      return args
