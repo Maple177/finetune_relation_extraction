@@ -36,7 +36,7 @@ codes for fine-tuning domain-specific BERT variants on relation extraction (RE) 
    ```
   - similarly, add the class weights in "class_weights";
   - for a new BERT variant, add its Huggingface version name in "bert_names_to_versions";
-  - number of classes (including false relation) in "number_of_labels".
+  - number of classes (including the false relation) in "number_of_labels".
   
 # Command
 - use the example slurm file will train an ensemble of 5 PubMedBERT models on chemprot (blurb). Set your hyperparameters in the slurm file or directory pass them using the following line.
