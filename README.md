@@ -66,7 +66,7 @@ python3 main.py --model_name pubmedbert \
   
 - set --early_stopping to enable early stopping, by default fine-tuning will stop if micro F1-score on the validation set does not increase within 5 epochs.
 
-- :bulb: by default best checkpoints of each run will be saved under run_i (i=1,...,ensemble_size), but this may take much disk space. Set --do_not_save_all_models to save only the best checkpoint of the current run (if you do not need fine-tuned model weights for each run).
+- :bulb: by default best checkpoints of each run will be saved under run_$i$ ($i$=1,...,ensemble_size), but this may take much disk space. Set --do_not_save_all_models to save only the best checkpoint of the current run (if you do not need fine-tuned model weights for each run).
 
 - more details about fine-tuning options:
 ```
