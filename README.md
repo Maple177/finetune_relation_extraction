@@ -4,7 +4,7 @@ codes for fine-tuning domain-specific BERT variants on relation extraction (RE) 
 (applies also to text classification datasets)
 
 # About Fine-tuning
-- we take consecutive seeds for multiple runs, e.g. if seeded by 41 for 5 runs, the 5 runs will be respectively seeded by 41 ,42, 43, 44, 45.
+- we use consecutive seeds for multiple runs, e.g. if seeded by 41 for 5 runs, the 5 runs will be respectively seeded by 41 ,42, 43, 44, 45.
 - we use a weighted binary cross entropy as the loss with the weight of the $i$-th class: $c_i=\frac{\sum\limits_{j=0}^{M-1} N_j}{N_i}$ , where $N_i$ is the number of examples labelled by the $i$-th class; $M$ is the number of classes.
 - we use a slanted triangular scheduler on the learning rate (remove --warmup to change to constant learning rate).
 
