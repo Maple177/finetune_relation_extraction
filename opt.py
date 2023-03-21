@@ -5,7 +5,7 @@ def get_args():
 	
      group = parser.add_argument_group('--fine_tuning_options')
      group.add_argument("--data_dir", default="./data/", type=str,
-                         help="The input data dir. Should contain the .tsv files. See instructions.")
+                         help="The input data directory. Should contain tsv files. See instructions.")
      group.add_argument("--task_name", default=None, type=str,
 		         help="Name of the corpus to use.")
      group.add_argument("--pretrained_model_path",default="./pretrained_models/",type=str,
@@ -42,9 +42,9 @@ def get_args():
 		         help="Denote this value by p; p * number_of_total_steps will be used for warmup i.e. "
 		              "at the end of p * number_of_total_steps, learning rate will attain the target value.")
      group.add_argument("--logging_steps", type=int, default=50,
-                         help="Denote this value by X; Log every X updates steps.")
+                         help="Denote this value by X; Log the training loss every X updates steps.")
      group.add_argument("--do_not_save_all_models",action="store_true",
-                         help="Set this to save storage space: if not set, we save ensemble_size checkpoints for each run "
-                              "(which may take much storage space).")
+                         help="Set this to save disk space: if not set, we save ensemble_size checkpoints for each run "
+                              "(which may require too much disk space).")
      args = parser.parse_args()
      return args
