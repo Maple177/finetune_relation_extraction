@@ -103,7 +103,7 @@ def main():
     # printout micro- scores
     logger.info(f"finished. evaluatoin scores are saved under {score_path}.")
     logger.info("following are evaluation scores (micro-): avg ± std.")
-    if args.do_not_generate_test_scores:
+    if args.do_not_generate_test_score:
         dev_score_report = summarize_results(args,output_dir,score_path) 
         logger.info(dev_score_report)
     else:
