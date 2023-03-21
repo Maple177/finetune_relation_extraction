@@ -13,7 +13,7 @@ codes for fine-tuning domain-specific BERT variants on relation extraction (RE) 
 
   :exclamation: make sure that:
   - the first line of your tsv files contains column names seperated by '\t'; 
-  - there must be two columns named by "sentence" and "label". (refer to example.tsv as an example; if labels are not available, just fill the "label" column by integers)
+  - there must be two columns named by "sentence" and "label". (refer to example.tsv as an example; if labels are not available, just fill the "label" column by random existing labels)
 
 - we keep a list of corpus and BERT variants as presets, you can input directly these corpus names and BERT variant names.
 
