@@ -37,10 +37,10 @@ def get_args():
      group.add_argument("--seed",type=int,default=41,
 		         help="The random seed to initialize model weights.")
      group.add_argument("--shuffle_train",action="store_true",help="If set, shuffle the train set before training.")
-     group.add_argument("--warmup",action="store_true",help="If set, use linear warmup scheduler for learning rate.")
+     group.add_argument("--warmup",action="store_true",help="If set, use a slanted triangular scheduler for learning rate.")
      group.add_argument("--warmup_ratio",type=float,default=0.1,
 		         help="Denote this value by p; p * number_of_total_steps will be used for warmup i.e. "
-		              "at the end of p * number_of_total_steps, learning rate will attain the target value.")
+		              "at the end of p * number_of_total_steps, learning rate will reach the target value.")
      group.add_argument("--logging_steps", type=int, default=50,
                          help="Denote this value by X; Log the training loss every X steps.")
      group.add_argument("--do_not_save_all_models",action="store_true",
