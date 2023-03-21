@@ -64,7 +64,7 @@ python3 main.py --model_name pubmedbert \
   
 - set --early_stopping to enable early stopping, by default fine-tuning will stop if micro F1-score on the validation set does not increase within 5 epochs.
 
-- get more details about fine-tuning options:
+- more details about fine-tuning options:
 ```
 python3 main.py --help
 ```
