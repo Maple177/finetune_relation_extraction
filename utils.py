@@ -20,11 +20,11 @@ def one_hot(x,num_labels):
         res[i,v] = 1
     return res
 
-def get_scores(gold,pred):
+def get_scores(gold,pred,num_labels):
     scores_micro_plus = precision_recall_fscore_support(gold,pred,average="micro")[:3]
     scores_micro_minus = precision_recall_fscore_support(gold,pred,average="micro",labels=list(range(1,num_labels)))[:3]
     scores_macro_plus = precision_recall_fscore_support(gold,pred,average="macro")[:3]
-    score_macro_minus = precision_recall_fscore_support(gold,pred,average="macro",labels=list(range(1,num_labels)))[:3]
+    scores_macro_minus = precision_recall_fscore_support(gold,pred,average="macro",labels=list(range(1,num_labels)))[:3]
     return scores_micro_plus, scores_micro_minus, scores_macro_plus, scores_macro_minus
 
 def generate_dataframe(ps,rs,fs,ensemble_size,output_path):
@@ -62,10 +62,10 @@ def summarize_results(args,path,output_path):
     dev_ps_micro_plus, dev_rs_micro_plus, dev_fs_micro_plus = [], [], []
     dev_ps_micro_minus, dev_rs_micro_minus, dev_fs_micro_minus = [], [], []
     dev_ps_macro_plus, dev_rs_macro_plus, dev_fs_macro_plus = [], [], []
-    dev_ps_macro_minus, dev_rs_macro_minus, dev_fs_macro_minus = [], [], []
+    dev_ps_macro_minus, dev_rs_macro_minus, dev_fs_macro_minus = [], [], []
     
     for pred in [dev_preds[i] for i in range(ensemble_size)] + [dev_vote_preds]:
-        scores_micro_plus, scores_micro_minus, scores_macro_plus, scores_macro_minus = get_scores(y_dev,pred)
+        scores_micro_plus, scores_micro_minus, scores_macro_plus, scores_macro_minus = get_scores(y_dev,pred,num_labels)
         p, r, f = scores_micro_plus[:3]
         dev_ps_micro_plus.append(p); dev_rs_micro_plus.append(r); dev_fs_micro_plus.append(f)
         p, r, f = scores_micro_minus[:3]
@@ -75,11 +75,10 @@ def summarize_results(args,path,output_path):
         p, r, f = scores_macro_minus[:3]
         dev_ps_macro_minus.append(p); dev_rs_macro_minus.append(r); dev_fs_macro_minus.append(f)
     
-    generate(dev_ps_micro_plus,dev_rs_micro_plus,dev_fs_micro_plus,ensemble_size,os.path.join(dev_output_path,"micro_plus.csv"))
-    generate(dev_ps_micro_minus,dev_rs_micro_minus,dev_fs_micro_minus,ensemble_size,os.path.join(dev_output_path,"micro_minus.csv"))
-    generate(dev_ps_macro_plus,dev_rs_macro_plus,dev_fs_macro_plus,ensemble_size,os.path.join(dev_output_path,"macro_plus.csv"))
-    generate(dev_ps_macro_minus,dev_rs_macro_minus,dev_fs_macro_minus,ensemble_size,os.path.join(dev_output_path,"macro_minus.csv"))
-    
+    generate_dataframe(dev_ps_micro_plus,dev_rs_micro_plus,dev_fs_micro_plus,ensemble_size,os.path.join(dev_output_path,"micro_plus.csv"))
+    generate_dataframe(dev_ps_micro_minus,dev_rs_micro_minus,dev_fs_micro_minus,ensemble_size,os.path.join(dev_output_path,"micro_minus.csv"))
+    generate_dataframe(dev_ps_macro_plus,dev_rs_macro_plus,dev_fs_macro_plus,ensemble_size,os.path.join(dev_output_path,"macro_plus.csv"))
+    generate_dataframe(dev_ps_macro_minus,dev_rs_macro_minus,dev_fs_macro_minus,ensemble_size,os.path.join(dev_output_path,"macro_minus.csv"))
     
     # evaluation on test
     test_vote_preds = np.zeros((test_size,num_labels))
@@ -88,15 +87,16 @@ def summarize_results(args,path,output_path):
         tmp_test_pred = one_hot(test_preds[i],num_labels)
         test_vote_preds += tmp_test_pred
         all_test_preds.append(tmp_test_pred)
+    test_vote_preds = one_hot(np.argmax(test_vote_preds,1),num_labels)
     all_test_preds.append(test_vote_preds)
    
     test_ps_micro_plus, test_rs_micro_plus, test_fs_micro_plus = [], [], []
     test_ps_micro_minus, test_rs_micro_minus, test_fs_micro_minus = [], [], []
     test_ps_macro_plus, test_rs_macro_plus, test_fs_macro_plus = [], [], []
-    test_ps_macro_minus, test_rs_macro_minus, test_fs_macro_minus = [], [], []
+    test_ps_macro_minus, test_rs_macro_minus, test_fs_macro_minus = [], [], []
     
     for pred in all_test_preds:
-        scores_micro_plus, scores_micro_minus, scores_macro_plus, scores_macro_minus = get_scores(y_test,pred)
+        scores_micro_plus, scores_micro_minus, scores_macro_plus, scores_macro_minus = get_scores(y_test,pred,num_labels)
         p, r, f = scores_micro_plus[:3]
         test_ps_micro_plus.append(p); test_rs_micro_plus.append(r); test_fs_micro_plus.append(f)
         p, r, f = scores_micro_minus[:3]
@@ -106,10 +106,10 @@ def summarize_results(args,path,output_path):
         p, r, f = scores_macro_minus[:3]
         test_ps_macro_minus.append(p); test_rs_macro_minus.append(r); test_fs_macro_minus.append(f)
     
-    generate(test_ps_micro_plus,test_rs_micro_plus,test_fs_micro_plus,ensemble_size,os.path.join(test_output_path,"micro_plus.csv"))
-    generate(test_ps_micro_minus,test_rs_micro_minus,test_fs_micro_minus,ensemble_size,os.path.join(test_output_path,"micro_minus.csv"))
-    generate(test_ps_macro_plus,test_rs_macro_plus,test_fs_macro_plus,ensemble_size,os.path.join(test_output_path,"macro_plus.csv"))
-    generate(test_ps_macro_minus,test_rs_macro_minus,test_fs_macro_minus,ensemble_size,os.path.join(test_output_path,"macro_minus.csv"))
+    generate_dataframe(test_ps_micro_plus,test_rs_micro_plus,test_fs_micro_plus,ensemble_size,os.path.join(test_output_path,"micro_plus.csv"))
+    generate_dataframe(test_ps_micro_minus,test_rs_micro_minus,test_fs_micro_minus,ensemble_size,os.path.join(test_output_path,"micro_minus.csv"))
+    generate_dataframe(test_ps_macro_plus,test_rs_macro_plus,test_fs_macro_plus,ensemble_size,os.path.join(test_output_path,"macro_plus.csv"))
+    generate_dataframe(test_ps_macro_minus,test_rs_macro_minus,test_fs_macro_minus,ensemble_size,os.path.join(test_output_path,"macro_minus.csv"))
 
     dev_f1_scores = pd.read_csv(os.path.join(dev_output_path,"micro_minus.csv"))["F1-score"].values
     test_f1_scores = pd.read_csv(os.path.join(test_output_path,"micro_minus.csv"))["F1-score"].values

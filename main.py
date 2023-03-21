@@ -104,6 +104,7 @@ def main():
         os.makedirs(score_path)
     dev_score_report, test_score_report = summarize_results(args,output_dir,score_path) 
     logger.info(f"finished. evaluatoin scores are saved under {score_path}.")
+    logger.info("following are evaluation scores (micro-): avg ± std.")
     logger.info(dev_score_report)
     logger.info(test_score_report)   
  
