@@ -87,6 +87,8 @@ python3 main.py --help
 - you can monitor the process of fine-tuning by viewing the log under /logging/.
 - evaluation results on the validation set and the test set will be saved respectively under /scores/.../dev/ and /scores/.../test/.
 
+if you do not need saved model weights and prediction files, to release disk space, you can then delete everything under /models/.
+
 # Evaluation
 
 :paperclip: we calculate four types of F1-scores and save them automatically in .csv files after fine-tuning.
@@ -98,4 +100,4 @@ python3 main.py --help
 | macro+ | macro F1-score |
 | macro- | macro F1-score with the false relation EXCLUDED |
 
-if you do not need saved model weights and prediction files, to release disk space, you can then delete everything under /models/.
+:raised_hand: if labels of the test set are not availabel, set --do_not_generate_test_scores to skip evaluation on the test set.
