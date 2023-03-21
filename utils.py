@@ -32,28 +32,27 @@ def generate_dataframe(ps,rs,fs,ensemble_size,output_path):
     df_score.to_csv(output_path,index=False)
 
 def summarize_results(args,path,output_path):
+    num_labels = args.num_labels
+    mlb = MultiLabelBinarizer(classes=list(range(num_labels)))
+    
     dev_output_path = os.path.join(output_path,"dev")
     if not os.path.exists(dev_output_path):
         os.makedirs(dev_output_path)
-    test_output_path = os.path.join(output_path,"test")
-    if not os.path.exists(test_output_path):
-        os.makedirs(test_output_path)
-    
-    num_labels = args.num_labels
-    mlb = MultiLabelBinarizer(classes=list(range(num_labels)))
-   
     y_dev = mlb.fit_transform(json.load(open(os.path.join(args.data_dir,args.task_name,"label","dev.json"),'r'))["labels"])
-    y_test = mlb.fit_transform(json.load(open(os.path.join(args.data_dir,args.task_name,"label","test.json"),'r'))["labels"])
-
     if args.dry_run:
         y_dev = y_dev[:args.number_of_examples_for_dry_run]
-        y_test = y_test[:args.number_of_examples_for_dry_run]    
-
     dev_preds = np.load(os.path.join(path,"dev_preds.npy"))
-    test_preds = np.load(os.path.join(path,"test_preds.npy"))
-   
     ensemble_size, dev_size, _ = dev_preds.shape
-    _, test_size = test_preds.shape
+    
+    if not args.do_not_generate_test_score:
+        test_output_path = os.path.join(output_path,"test")
+        if not os.path.exists(test_output_path):
+            os.makedirs(test_output_path)
+        y_test = mlb.fit_transform(json.load(open(os.path.join(args.data_dir,args.task_name,"label","test.json"),'r'))["labels"])
+        if args.dry_run:
+            y_test = y_test[:args.number_of_examples_for_dry_run]    
+        test_preds = np.load(os.path.join(path,"test_preds.npy"))
+        _, test_size = test_preds.shape
 
     assert ensemble_size == args.ensemble_size, f"should have {args.ensemble_size} runs; only got {ensemble_size} runs." 
     
@@ -80,46 +79,47 @@ def summarize_results(args,path,output_path):
     generate_dataframe(dev_ps_macro_plus,dev_rs_macro_plus,dev_fs_macro_plus,ensemble_size,os.path.join(dev_output_path,"macro_plus.csv"))
     generate_dataframe(dev_ps_macro_minus,dev_rs_macro_minus,dev_fs_macro_minus,ensemble_size,os.path.join(dev_output_path,"macro_minus.csv"))
     
-    # evaluation on test
-    test_vote_preds = np.zeros((test_size,num_labels))
-    all_test_preds = []
-    for i in range(ensemble_size):
-        tmp_test_pred = one_hot(test_preds[i],num_labels)
-        test_vote_preds += tmp_test_pred
-        all_test_preds.append(tmp_test_pred)
-    test_vote_preds = one_hot(np.argmax(test_vote_preds,1),num_labels)
-    all_test_preds.append(test_vote_preds)
-   
-    test_ps_micro_plus, test_rs_micro_plus, test_fs_micro_plus = [], [], []
-    test_ps_micro_minus, test_rs_micro_minus, test_fs_micro_minus = [], [], []
-    test_ps_macro_plus, test_rs_macro_plus, test_fs_macro_plus = [], [], []
-    test_ps_macro_minus, test_rs_macro_minus, test_fs_macro_minus = [], [], []
-    
-    for pred in all_test_preds:
-        scores_micro_plus, scores_micro_minus, scores_macro_plus, scores_macro_minus = get_scores(y_test,pred,num_labels)
-        p, r, f = scores_micro_plus[:3]
-        test_ps_micro_plus.append(p); test_rs_micro_plus.append(r); test_fs_micro_plus.append(f)
-        p, r, f = scores_micro_minus[:3]
-        test_ps_micro_minus.append(p); test_rs_micro_minus.append(r); test_fs_micro_minus.append(f)
-        p, r, f = scores_macro_plus[:3]
-        test_ps_macro_plus.append(p); test_rs_macro_plus.append(r); test_fs_macro_plus.append(f)
-        p, r, f = scores_macro_minus[:3]
-        test_ps_macro_minus.append(p); test_rs_macro_minus.append(r); test_fs_macro_minus.append(f)
-    
-    generate_dataframe(test_ps_micro_plus,test_rs_micro_plus,test_fs_micro_plus,ensemble_size,os.path.join(test_output_path,"micro_plus.csv"))
-    generate_dataframe(test_ps_micro_minus,test_rs_micro_minus,test_fs_micro_minus,ensemble_size,os.path.join(test_output_path,"micro_minus.csv"))
-    generate_dataframe(test_ps_macro_plus,test_rs_macro_plus,test_fs_macro_plus,ensemble_size,os.path.join(test_output_path,"macro_plus.csv"))
-    generate_dataframe(test_ps_macro_minus,test_rs_macro_minus,test_fs_macro_minus,ensemble_size,os.path.join(test_output_path,"macro_minus.csv"))
-
     dev_f1_scores = pd.read_csv(os.path.join(dev_output_path,"micro_minus.csv"))["F1-score"].values
-    test_f1_scores = pd.read_csv(os.path.join(test_output_path,"micro_minus.csv"))["F1-score"].values
-
     dev_run_scores, dev_vote_score = dev_f1_scores[:ensemble_size], dev_f1_scores[-1]
-    test_run_scores, test_vote_score = test_f1_scores[:ensemble_size], test_f1_scores[-1]
-
     dev_score_report = f"on dev: {np.mean(dev_run_scores)} ± {np.std(dev_run_scores)}; voting scores: {dev_vote_score}"
-    test_score_report = f"on test: {np.mean(test_run_scores)} ± {np.std(test_run_scores)}; voting scores: {test_vote_score}"
-    return dev_score_report, test_score_report
+    
+    if not args.do_not_generate_test_score:
+        # evaluation on test
+        test_vote_preds = np.zeros((test_size,num_labels))
+        all_test_preds = []
+        for i in range(ensemble_size):
+            tmp_test_pred = one_hot(test_preds[i],num_labels)
+            test_vote_preds += tmp_test_pred
+            all_test_preds.append(tmp_test_pred)
+        test_vote_preds = one_hot(np.argmax(test_vote_preds,1),num_labels)
+        all_test_preds.append(test_vote_preds)
+
+        test_ps_micro_plus, test_rs_micro_plus, test_fs_micro_plus = [], [], []
+        test_ps_micro_minus, test_rs_micro_minus, test_fs_micro_minus = [], [], []
+        test_ps_macro_plus, test_rs_macro_plus, test_fs_macro_plus = [], [], []
+        test_ps_macro_minus, test_rs_macro_minus, test_fs_macro_minus = [], [], []
+
+        for pred in all_test_preds:
+            scores_micro_plus, scores_micro_minus, scores_macro_plus, scores_macro_minus = get_scores(y_test,pred,num_labels)
+            p, r, f = scores_micro_plus[:3]
+            test_ps_micro_plus.append(p); test_rs_micro_plus.append(r); test_fs_micro_plus.append(f)
+            p, r, f = scores_micro_minus[:3]
+            test_ps_micro_minus.append(p); test_rs_micro_minus.append(r); test_fs_micro_minus.append(f)
+            p, r, f = scores_macro_plus[:3]
+            test_ps_macro_plus.append(p); test_rs_macro_plus.append(r); test_fs_macro_plus.append(f)
+            p, r, f = scores_macro_minus[:3]
+            test_ps_macro_minus.append(p); test_rs_macro_minus.append(r); test_fs_macro_minus.append(f)
+
+        generate_dataframe(test_ps_micro_plus,test_rs_micro_plus,test_fs_micro_plus,ensemble_size,os.path.join(test_output_path,"micro_plus.csv"))
+        generate_dataframe(test_ps_micro_minus,test_rs_micro_minus,test_fs_micro_minus,ensemble_size,os.path.join(test_output_path,"micro_minus.csv"))
+        generate_dataframe(test_ps_macro_plus,test_rs_macro_plus,test_fs_macro_plus,ensemble_size,os.path.join(test_output_path,"macro_plus.csv"))
+        generate_dataframe(test_ps_macro_minus,test_rs_macro_minus,test_fs_macro_minus,ensemble_size,os.path.join(test_output_path,"macro_minus.csv"))
+
+        test_f1_scores = pd.read_csv(os.path.join(test_output_path,"micro_minus.csv"))["F1-score"].values
+        test_run_scores, test_vote_score = test_f1_scores[:ensemble_size], test_f1_scores[-1]
+        test_score_report = f"on test: {np.mean(test_run_scores)} ± {np.std(test_run_scores)}; voting scores: {test_vote_score}"
+        return dev_score_report, test_score_report
+    return dev_score_report
 
 def set_seed(args,ensemble_id):
     seed = args.seed + ensemble_id
