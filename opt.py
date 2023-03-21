@@ -22,7 +22,7 @@ def get_args():
      group.add_argument("--early_stopping",action="store_true",
                          help="If to use early stopping during training.")
      group.add_argument("--patience",type=int,default=5,
-                         help="Patience of early stopping")
+                         help="Patience of early stopping.")
      group.add_argument("--ensemble_size",type=int,
                          help="Number of models i.e. runs initialized with different random seeds.")
      group.add_argument("--max_seq_length",type=int,default=512,
