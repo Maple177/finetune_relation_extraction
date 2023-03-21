@@ -23,7 +23,7 @@ def get_args():
                          help="Criteria to use for early stopping.")
      group.add_argument("--early_stopping",action="store_true",
                          help="If use early stopping during training.")
-     group.add_argument("--patience",type=int,default=3,
+     group.add_argument("--patience",type=int,default=5,
                          help="Patience of early stopping")
      group.add_argument("--ensemble_size",type=int,
                          help="Number of models i.e. runs initialized with different random seeds.")
