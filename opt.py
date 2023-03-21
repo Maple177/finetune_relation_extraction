@@ -9,7 +9,7 @@ def get_args():
      group.add_argument("--task_name", default=None, type=str,
 		         help="Name of the corpus to use.")
      group.add_argument("--pretrained_model_path",default="./pretrained_models/",type=str,
-                         help="Path to locally saved pre-trained model weights.")
+                         help="Path to local pre-trained model weights.")
      group.add_argument("--model_name",type=str,help="Name of the BERT variant to use.")
      group.add_argument("--output_dir", default="./models/", type=str,
                          help="The output directory where the model predictions and checkpoints will be written.")
