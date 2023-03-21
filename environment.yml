@@ -1,4 +1,4 @@
-name: finetune-on-re
+name: finetune_on_re
 channels:
   - conda-forge
   - defaults
