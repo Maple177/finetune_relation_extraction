@@ -44,7 +44,7 @@ def get_args():
      group.add_argument("--logging_steps", type=int, default=50,
                          help="Denote this value by X; Log the training loss every X steps.")
      group.add_argument("--do_not_save_all_models",action="store_true",
-                         help="Set this to save disk space: if not set, we save ensemble_size checkpoints for all runs "
+                         help="Set this to save disk space: if not set, will save ensemble_size checkpoints for all runs "
                               "(which may require too much disk space).")
      args = parser.parse_args()
      return args
