@@ -47,7 +47,7 @@ python3 main.py --model_name pubmedbert \
                 --ensemble_size 5  --warmup \
                 --do_not_save_all_models
 ```
-- use the example command line should be able to reproduce the follwing result (/test/micro_minus.csv) on ChemProt (blurb):
+- use the example command line should be able to reproduce the follwing result (scores/.../test/micro_minus.csv) on ChemProt (blurb):
 
 
 | | precision | recall | F1-score |
@@ -61,12 +61,12 @@ python3 main.py --model_name pubmedbert \
 
 
 - :bulb: set --dry_run to make a quick pass (this will take a small subset of data), check:
-  - if dev_preds.npy & test_preds.npy are correctly generated under /models/your_hyperparamater_setting/; 
-  - if macro_minus.csv, macro_plus.csv, micro_minus.csv, micro_plus.csv are correctly generated under /scores/your_hyperparameter_setting/dev/ & /scores/your_hyperparameter_setting/test/.
+  - if dev_preds.npy & test_preds.npy are correctly generated under /models/.../; 
+  - if macro_minus.csv, macro_plus.csv, micro_minus.csv, micro_plus.csv are correctly generated under /scores/.../dev/ & /scores/.../test/.
   
 - set --early_stopping to enable early stopping, by default fine-tuning will stop if micro F1-score on the validation set does not increase within 5 epochs.
 
-- :bulb: by default best checkpoints of each run will be saved under run_$i$ ($i$=1,...,ensemble_size), but this may take much disk space. Set --do_not_save_all_models to save only the best checkpoint of the current run (if you do not need fine-tuned model weights for each run).
+- :bulb: by default best checkpoints of each run will be saved under /models/.../run_$i$ ($i$=1,...,ensemble_size), but this may take much disk space. Set --do_not_save_all_models to save only the best checkpoint of the current run (if you do not need fine-tuned model weights for each run).
 
 - more details about fine-tuning options:
 ```
