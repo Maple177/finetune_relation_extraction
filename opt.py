@@ -38,7 +38,7 @@ def get_args():
                          help="Maximum number of epochs.")
      group.add_argument("--num_train_epochs", default=20, type=int,
                          help="Total number of training epochs to perform.")
-     group.add_argument("--seed",type=int)
+     group.add_argument("--seed",type=int,default=41)
      group.add_argument("--shuffle_train",action="store_true",help="If set, shuffle the train set before training.")
      group.add_argument("--warmup",action="store_true",help="If set, use linear warmup scheduler for learning rate.")
      group.add_argument("--warmup_ratio",type=float,default=0.1)
