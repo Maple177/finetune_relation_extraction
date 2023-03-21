@@ -39,7 +39,7 @@ codes for fine-tuning domain-specific BERT variants on relation extraction (RE) 
   - number of classes (including the false relation) in "number_of_labels".
   
 # Command
-- use the example slurm file will train an ensemble of 5 PubMedBERT models on chemprot (blurb). Set your hyperparameters in the slurm file or directory pass them using the following line.
+- use the example slurm file will train an ensemble of 5 PubMedBERT models on ChemProt (blurb). Set your hyperparameters in the slurm file or directory pass them using the following line.
 ```
 python3 main.py --model_name pubmedbert \
                 --task_name chemprot_blurb \
