@@ -83,9 +83,9 @@ python3 main.py --help
 
 # Output
 
-- prediction files (label ids) on dev / test will be saved under the directory /models/.
+- prediction files (label ids) on dev & test set will be saved under the directory /models/.
 - you can monitor the process of fine-tuning by viewing the log under /logging/.
-- evaluation results on the validation set and the test set will be saved respectively under /scores/dev/ and /scores/test/.
+- evaluation results on the validation set and the test set will be saved respectively under /scores/.../dev/ and /scores/.../test/.
 
 # Evaluation
 
