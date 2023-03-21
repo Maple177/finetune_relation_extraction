@@ -1,6 +1,5 @@
 from argparse import ArgumentParser
 
-
 def get_args():
      parser = ArgumentParser(description='Finetuning BERT models')
 	
