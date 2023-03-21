@@ -46,5 +46,7 @@ def get_args():
      group.add_argument("--do_not_save_all_models",action="store_true",
                          help="Set this to save disk space: if not set, will save ensemble_size checkpoints for all runs "
                               "(which may require too much disk space).")
+     group.add_argument("--do_not_generate_test_score",action="store_true",
+			 help="Set this to avoid evaluation on the test set.")
      args = parser.parse_args()
      return args
