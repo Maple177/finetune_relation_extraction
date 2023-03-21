@@ -11,7 +11,9 @@ codes for fine-tuning domain-specific BERT variants on relation extraction (RE) 
 # How to use
 - create a directory /data/ under the current directory, prepare train.tsv, dev.tsv, test.tsv under /data/corpus_name/, e.g. /data/chemprot_blue/. 
 
-  :exclamation: make sure that the first line of your tsv files contains column names seperated by '\t'; there must be two columns named by "sentence" and "label". (refer to example.tsv as an example)
+  :exclamation: make sure that:
+  - the first line of your tsv files contains column names seperated by '\t'; 
+  - there must be two columns named by "sentence" and "label". (refer to example.tsv as an example)
 
 - we keep a list of corpus and BERT variants as presets, you can input directly these corpus names and BERT variant names.
 
