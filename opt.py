@@ -5,7 +5,7 @@ def get_args():
 	
      group = parser.add_argument_group('--fine_tuning_options')
      group.add_argument("--data_dir", default="./data/", type=str,
-                         help="The input data directory. Should contain tsv files. See instructions.")
+                         help="The input data directory. Should contain tsv files. See README.")
      group.add_argument("--task_name", default=None, type=str,
 		         help="Name of the corpus to use.")
      group.add_argument("--pretrained_model_path",default="./pretrained_models/",type=str,
