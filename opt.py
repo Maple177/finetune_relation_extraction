@@ -42,9 +42,9 @@ def get_args():
 		         help="Denote this value by p; p * number_of_total_steps will be used for warmup i.e. "
 		              "at the end of p * number_of_total_steps, learning rate will attain the target value.")
      group.add_argument("--logging_steps", type=int, default=50,
-                         help="Log every X updates steps.")
+                         help="Denote this value by X; Log every X updates steps.")
      group.add_argument("--do_not_save_all_models",action="store_true",
-                         help="Set this to save storage space: if not set, we save ensemble_size checkpoints for each run"
+                         help="Set this to save storage space: if not set, we save ensemble_size checkpoints for each run "
                               "(which may take much storage space).")
      args = parser.parse_args()
      return args
