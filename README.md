@@ -33,7 +33,7 @@ codes for fine-tuning domain-specific BERT variants on relation extraction (RE) 
     "CPR:9": 5}
    ```
   - similarly, add the class weights in "class_weights";
-  - for a new BERT variant, add its version name on HuggingFace in "bert_names_to_versions";
+  - for a new BERT variant, add its Huggingface version name in "bert_names_to_versions";
   - number of classes (including false relation) in "number_of_labels".
   
 # Command
@@ -67,7 +67,7 @@ python3 main.py --model_name pubmedbert \
 
 - :bulb: by default best checkpoints of all runs will be saved under /models/.../run_i ($i$=1,...,ensemble_size), but this may take too much disk space. Set --do_not_save_all_models to save only the best checkpoint of the current run (if you do not need fine-tuned model weights for each run).
 
-- more details about fine-tuning options:
+- get more details about fine-tuning options:
 ```
 python3 main.py --help
 ```
@@ -81,7 +81,7 @@ python3 main.py --help
 
 # Output
 
-- prediction files on dev / test will be saved under the directory /models/.
+- prediction files (label ids) on dev / test will be saved under the directory /models/.
 - you can monitor the process of fine-tuning by viewing the log under /logging/.
 - evaluation results on the validation set and the test set will be saved respectively under /scores/dev/ and /scores/test/.
 
