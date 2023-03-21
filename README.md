@@ -58,7 +58,7 @@ python3 main.py --model_name pubmedbert \
 | vote | 0.814 | 0.759 | 0.785 |
 
 
-- set --dry_run to make a quick pass (this will take a small subset of data), check:
+- :bulb: set --dry_run to make a quick pass (this will take a small subset of data), check:
   - if dev_preds.npy & test_preds.npy are correctly generated under /models/your_hyperparamater_setting/; 
   - if macro_minus.csv, macro_plus.csv, micro_minus.csv, micro_plus.csv are correctly generated under /scores/your_hyperparameter_setting/dev/ & /scores/your_hyperparameter_setting/test/.
   
