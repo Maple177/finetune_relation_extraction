@@ -90,7 +90,7 @@ python3 main.py --help
 - you can monitor the process of fine-tuning by viewing the log under /logging/.
 - evaluation results on the validation set and the test set will be saved respectively under /scores/.../dev/ and /scores/.../test/.
 
-if you do not need saved model weights and prediction files, to release disk space, you can then delete everything under /models/.
+:bulb: if you do not need saved model weights and prediction files, to release disk space, you can then delete everything under /models/.
 
 # Evaluation
 
