@@ -81,7 +81,7 @@ def summarize_results(args,path,output_path):
     
     dev_f1_scores = pd.read_csv(os.path.join(dev_output_path,"micro_minus.csv"))["F1-score"].values
     dev_run_scores, dev_vote_score = dev_f1_scores[:ensemble_size], dev_f1_scores[-1]
-    dev_score_report = f"on dev: {np.mean(dev_run_scores)} ± {np.std(dev_run_scores)}; voting scores: {dev_vote_score}"
+    dev_score_report = f"on dev: {np.mean(dev_run_scores)} ± {np.std(dev_run_scores)}; voting score: {dev_vote_score}"
     
     if not args.do_not_generate_test_score:
         # evaluation on test
@@ -117,7 +117,7 @@ def summarize_results(args,path,output_path):
 
         test_f1_scores = pd.read_csv(os.path.join(test_output_path,"micro_minus.csv"))["F1-score"].values
         test_run_scores, test_vote_score = test_f1_scores[:ensemble_size], test_f1_scores[-1]
-        test_score_report = f"on test: {np.mean(test_run_scores)} ± {np.std(test_run_scores)}; voting scores: {test_vote_score}"
+        test_score_report = f"on test: {np.mean(test_run_scores)} ± {np.std(test_run_scores)}; voting score: {test_vote_score}"
         return dev_score_report, test_score_report
     return dev_score_report
 
